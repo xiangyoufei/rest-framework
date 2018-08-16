@@ -1,0 +1,28 @@
+1. 现在想要在程序启动的时候执行某些事情，可以让该类实现InitializingBean接口，重写里面的afterPropertiesSet方法
+	也可以使用spring的配置注解，在配置类@Configuration 中使用 @Bean 注册bean 实例也可以
+
+
+2. 使用@value方法，可以直接使用配置文件中的数据。
+
+3. 关于过滤器，可以使用@WebFilter注解，
+	也可以使用配置类@Configuration，注册bean实例，使用FilterRegistrationBean
+
+4.@Primary 当有两个实现类的时候 可以用此注解表明主要对象，还有@Autowired(required=false)也可以实现，此种注解可用在调用
+	第三方类 重写其方法。 
+5 spring框架还提供了很多@Condition给我们用，当然总结用语哪种好理解，看给位读者喽
+
+@ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）
+@ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）
+@ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
+@ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
+@ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
+@ConditionalOnNotWebApplication（不是web应用）
+
+后续会继续补充
+
+另一种总结
+
+@ConditionalOnClass：该注解的参数对应的类必须存在，否则不解析该注解修饰的配置类；
+@ConditionalOnMissingBean：该注解表示，如果存在它修饰的类的bean，则不需要再创建这个bean；
+	可以给该注解传入参数例如@ConditionOnMissingBean(name = "example")，
+	s这个表示如果name为“example”的bean存在，这该注解修饰的代码块不执行。
