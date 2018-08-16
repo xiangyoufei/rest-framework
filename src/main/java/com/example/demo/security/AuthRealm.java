@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -31,16 +32,22 @@ public class AuthRealm extends AuthorizingRealm{
     //认证.登录
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-    	logger.info("==========shiro Authentication=============");
+    	logger.info("==========shiro Authentication  认证 ");
         UsernamePasswordToken utoken=(UsernamePasswordToken) token;//获取用户输入的token
         String username = utoken.getUsername();
         User user = userService.findUserByUserName(username);
+        if(user==null) {
+        	 throw new AccountException("用户名不正确");
+        }else if(!user.getPassword().equals(new String((char[]) token.getCredentials()))) {
+        	throw new AccountException("用户名或密码不正确");
+
+        }
         return new SimpleAuthenticationInfo(user, user.getPassword(),this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
     }
-    //授权
+    //授权 doGetAuthorizationInfo 方法只有在需要权限认证时才会进去
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
-    	logger.info("==========AuthorizationInfo ");
+    	logger.info("==========AuthorizationInfo 授权");
         User user=(User) principal.fromRealm(this.getClass().getName()).iterator().next();//获取session中的用户
         List<String> permissions=new ArrayList<>();
         Set<Role> roles = user.getRoles();
