@@ -1,6 +1,7 @@
-package com.example.demo.security;
+package com.example.demo.security.shiro;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,13 +22,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.example.demo.entity.Module;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
+import com.example.demo.security.jwt.JWTToken;
 import com.example.demo.service.UserService;
 
 public class AuthRealm extends AuthorizingRealm{
+	
     @Autowired
     private UserService userService;
     
     private static final Logger logger=LoggerFactory.getLogger(AuthRealm.class);
+    
+    
+    
+    /**
+     * 大坑！，必须重写此方法，不然Shiro会报错
+     */
+    @Override
+    public boolean supports(AuthenticationToken token) {
+        return token instanceof JWTToken;
+    }
+
+
     
     //认证.登录
     @Override
@@ -51,8 +66,10 @@ public class AuthRealm extends AuthorizingRealm{
         User user=(User) principal.fromRealm(this.getClass().getName()).iterator().next();//获取session中的用户
         List<String> permissions=new ArrayList<>();
         Set<Role> roles = user.getRoles();
+        Set<String> rolesName=new HashSet<>();
         if(roles.size()>0) {
             for(Role role : roles) {
+            	rolesName.add(role.getRname());
                 Set<Module> modules = role.getModules();
                 if(modules.size()>0) {
                     for(Module module : modules) {
@@ -63,6 +80,7 @@ public class AuthRealm extends AuthorizingRealm{
         }
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
         info.addStringPermissions(permissions);//将权限放入shiro中.
+        info.addRoles(rolesName);
         return info;
     }
 

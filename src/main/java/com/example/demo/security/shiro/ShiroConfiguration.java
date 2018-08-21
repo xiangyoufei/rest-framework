@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.example.demo.security.shiro;
 
 import java.util.LinkedHashMap;
 
@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class ShiroConfiguration {
+	/**应该是使用shiro的过滤器*/
 	@Bean(name="shiroFilter")
 	public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager manager) {
 		ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
@@ -44,7 +45,6 @@ public class ShiroConfiguration {
 	//配置核心安全事务管理器
 	@Bean(name="securityManager")
 	public SecurityManager securityManager(@Qualifier("authRealm") AuthRealm authRealm) {
-		System.err.println("--------------shiro已经加载----------------");
 		DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
 		manager.setRealm(authRealm);
 		return manager;

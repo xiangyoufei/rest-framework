@@ -17,7 +17,7 @@ import com.example.demo.aspect.IgnoreSecurity;
 import com.example.demo.dto.Response;
 import com.example.demo.entity.User;
 
-@RestController
+//@RestController
 public class LoginController {
 	//	//密匙 12345678
 	//	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider("12345678");
