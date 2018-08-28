@@ -14,7 +14,6 @@ import com.example.demo.util.PropsUtil;
 /**
  * 数据库连接上下文
  *
- * @author huangyong
  * @since 1.0.0
  */
 @Configuration

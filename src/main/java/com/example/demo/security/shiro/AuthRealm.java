@@ -39,7 +39,9 @@ public class AuthRealm extends AuthorizingRealm{
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+    	
+//        return token instanceof JWTToken;
+    	return super.supports(token);
     }
 
 
@@ -55,7 +57,6 @@ public class AuthRealm extends AuthorizingRealm{
         	 throw new AccountException("用户名不正确");
         }else if(!user.getPassword().equals(new String((char[]) token.getCredentials()))) {
         	throw new AccountException("用户名或密码不正确");
-
         }
         return new SimpleAuthenticationInfo(user, user.getPassword(),this.getClass().getName());//放入shiro.调用CredentialsMatcher检验密码
     }

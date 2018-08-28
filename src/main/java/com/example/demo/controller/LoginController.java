@@ -6,23 +6,31 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.aspect.IgnoreSecurity;
 import com.example.demo.dto.Response;
+import com.example.demo.dto.ResponseBean;
 import com.example.demo.entity.User;
+import com.example.demo.security.jwt.JwtUtils;
+import com.example.demo.service.UserService;
 
-//@RestController
+@RestController
 public class LoginController {
 	//	//密匙 12345678
 	//	JwtTokenProvider jwtTokenProvider = new JwtTokenProvider("12345678");
 	private static final Logger logger=LoggerFactory.getLogger(LoginController.class);
 	
+	@Autowired
+	private UserService userService;
+
 	@Autowired  
 	HttpServletRequest request;
 	@Autowired
@@ -31,12 +39,26 @@ public class LoginController {
 
 	@PostMapping(value="/login" )
 	@IgnoreSecurity
-	public Response login(String username, String password,String vcode,Boolean rememberMe){
-		System.out.println(username);
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
+	public Response login(String username, String password/*,String vcode,Boolean rememberMe*/){
+		System.out.println("============login==================");
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password/*,rememberMe*/);
 		SecurityUtils.getSubject().login(token);
-
+		logger.info("token ============="+token);
 		return new Response().success("loginSuccess");
+	}
+
+
+	//  @PostMapping("/login")
+	public ResponseBean JWTlogin(@RequestParam("username") String username,
+			@RequestParam("password") String password) {
+		username=username.trim();
+		password=password.trim();
+		User userBean = userService.findUserByUserName(username);
+		if (userBean.getPassword().equals(password)) {
+			return new ResponseBean(200, "Login success", JwtUtils.sign(username, password));
+		} else {
+			throw new UnauthorizedException();
+		}
 	}
 
 
@@ -45,6 +67,7 @@ public class LoginController {
 	public Response loginUser(String username,String password) {
 		UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
 		//        HttpServletRequest request=HttpCont
+		System.out.println("============loginUser==================");
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			subject.login(usernamePasswordToken);   //完成登录

@@ -24,7 +24,13 @@ import com.example.demo.entity.User;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.UserService;
 
-@RestController
+/**
+ * 权限、角色的管理可以通过以下的注解方式实现，也可以在shiro配置文件中尽享配置。
+ * 	如下写法更加灵活，可以设置登陆/非登陆的双页面。  统一配置 其实也可以实现，只要配置为游客模式即可。
+ * @author lysss
+ *
+ */
+@RestController("/require")
 public class WebController {
 
     private static final Logger logger = LoggerFactory.getLogger(WebController.class);
@@ -36,18 +42,6 @@ public class WebController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public ResponseBean login(@RequestParam("username") String username,
-                              @RequestParam("password") String password) {
-    	username=username.trim();
-    	password=password.trim();
-    	 User userBean = userService.findUserByUserName(username);
-        if (userBean.getPassword().equals(password)) {
-            return new ResponseBean(200, "Login success", JwtUtils.sign(username, password));
-        } else {
-            throw new UnauthorizedException();
-        }
-    }
 
     @PostMapping("/article")
     public ResponseBean article() {
@@ -60,22 +54,22 @@ public class WebController {
         }
     }
 
-    @GetMapping("/require_auth")
-    @RequiresAuthentication
+    @GetMapping("/auth")
+//    @RequiresAuthentication
     public ResponseBean requireAuth() {
     	logger.info("===================  require_auth =====================");
         return new ResponseBean(200, "You are authenticated", null);
     }
 
-    @GetMapping("/require_role")
-    @RequiresRoles("admin")
+    @GetMapping("/role")
+//    @RequiresRoles("admin")
     public ResponseBean requireRole() {
     	logger.info("===================  require_role =====================");
         return new ResponseBean(200, "You are visiting require_role", null);
     }
 
-    @GetMapping("/require_permission")
-    @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
+    @GetMapping("/permission")
+//    @RequiresPermissions(logical = Logical.AND, value = {"view", "edit"})
     public ResponseBean requirePermission() {
         return new ResponseBean(200, "You are visiting permission require edit,view", null);
     }
