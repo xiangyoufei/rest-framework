@@ -4,9 +4,11 @@ import java.util.Properties;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Resource;
 
 import org.apache.ibatis.cache.Cache;
 import org.springframework.amqp.utils.SerializationUtils;
+import org.springframework.stereotype.Component;
 
 import com.example.demo.util.PropsUtil;
 
@@ -20,26 +22,29 @@ import redis.clients.jedis.JedisPoolConfig;
  *
  * @since 1.0.0
  */
+@Component("redisCache")
 public class RedisCache implements Cache {
 
-    private static final String CONFIG = "config.properties";
-    private static final String HOST = "redis.host";
-    private static final String PORT = "redis.port";
-    private static final String PASSWORD = "redis.password";
-    private static final String TIMEOUT = "redis.timeout";
-    private static final String MAX_TOTAL = "redis.max_total";
-    private static final String MAX_IDLE = "redis.max_idle";
-    private static final String MIN_IDLE = "redis.min_idle";
-    private static final String TEST_ON_BORROW = "redis.test_on_borrow";
-    private static final String TEST_ON_RETURN = "redis.test_on_return";
-
-    private static Properties config = PropsUtil.loadProps(CONFIG);
+//    private static final String CONFIG = "config.properties";
+//    private static final String HOST = "redis.host";
+//    private static final String PORT = "redis.port";
+//    private static final String PASSWORD = "redis.password";
+//    private static final String TIMEOUT = "redis.timeout";
+//    private static final String MAX_TOTAL = "redis.max_total";
+//    private static final String MAX_IDLE = "redis.max_idle";
+//    private static final String MIN_IDLE = "redis.min_idle";
+//    private static final String TEST_ON_BORROW = "redis.test_on_borrow";
+//    private static final String TEST_ON_RETURN = "redis.test_on_return";
+//
+//    private static Properties config = PropsUtil.loadProps(CONFIG);
 
     private String id;
     
+    
+    @Resource
     private JedisPool pool;
 
-    public RedisCache(String id) {
+   /* public RedisCache(String id) {
         this.id = id;
 
         String host = PropsUtil.getString(config, HOST);
@@ -65,7 +70,7 @@ public class RedisCache implements Cache {
         }
 
         this.pool = new JedisPool(poolConfig, host, port, timeout, password);
-    }
+    }*/
 
     @Override
     public String getId() {
