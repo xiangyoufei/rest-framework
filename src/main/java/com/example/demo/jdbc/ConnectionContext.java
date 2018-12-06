@@ -2,9 +2,11 @@ package com.example.demo.jdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.sql.DataSource;
 import java.util.Properties;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +35,10 @@ public class ConnectionContext {
     private static final String TEST_ON_RETURN = "jdbc.test_on_return";
 
     private static ThreadLocal<Connection> connectionHolder = new ThreadLocal<>();
-
+    
+    @Resource
+    private static DataSource dataSource;
+/*
     private static BasicDataSource dataSource = new BasicDataSource();
 
     static {
@@ -58,7 +63,7 @@ public class ConnectionContext {
             dataSource.setTestOnReturn(PropsUtil.getBoolean(config, TEST_ON_RETURN));
         }
     }
-
+*/
     public static Connection connect() {
         Connection connection = connectionHolder.get();
         if (connection == null) {
