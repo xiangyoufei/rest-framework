@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * 编码与解码操作工具类
  *
- * @author huangyong
+ * @author lysss
  * @since 1.0
  */
 public class CodecUtil {
