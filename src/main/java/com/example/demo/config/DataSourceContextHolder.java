@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 public class DataSourceContextHolder {
     public static final Logger log = LoggerFactory.getLogger(DataSourceContextHolder.class);
 
-    /**
-     * 默认数据源
-     */
-    public static final String DEFAULT_DS = "titan-master";
+
 
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<>();
 

@@ -26,3 +26,9 @@
 @ConditionalOnMissingBean：该注解表示，如果存在它修饰的类的bean，则不需要再创建这个bean；
 	可以给该注解传入参数例如@ConditionOnMissingBean(name = "example")，
 	s这个表示如果name为“example”的bean存在，这该注解修饰的代码块不执行。
+	
+	
+Spring初始化bean的时候，如果bean实现了InitializingBean接口，会自动调用afterPropertiesSet方法。
+ * 	并且同时在配置文件中指定了init-method，系统则是先调用afterPropertiesSet方法，然后在调用init-method中指定的方法。
+ * 	也就是说这个方法在spring启动时候优先调用
+ *  当然为了初始化某个方法，也可以使用init-method在配置文件设置，但是启动顺序 InitializingBean 更早

@@ -1,14 +1,15 @@
 package com.example.demo.filter;
 
+import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * 用于管理 WebContext 对象的生命周期
@@ -30,11 +31,11 @@ public class WebContextFilter implements Filter {
             return;
         }
 
-        WebContext.init(request, response);
+        
         try {
             filterChain.doFilter(request, response);
         } finally {
-            WebContext.destroy();
+           
         }
     }
 

@@ -10,6 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.config.DataSourceContextHolder;
+import com.example.demo.config.DynamicDataSource;
 
 /**
  * Aop 切面，切换动态数据源
@@ -32,7 +33,7 @@ public class DynamicDataSourceAspect {
         String methodName = point.getSignature().getName();
         //得到方法的参数的类型
         Class[] argClass = ((MethodSignature)point.getSignature()).getParameterTypes();
-        String dataSource = DataSourceContextHolder.DEFAULT_DS;
+        String dataSource = DynamicDataSource.DEFAULTDATASOURCE;
         try {
             // 得到访问的方法对象
             Method method = className.getMethod(methodName, argClass);

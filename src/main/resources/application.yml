@@ -1,0 +1,27 @@
+server:
+  port: 8885
+spring:
+  application:
+    name: lccl
+  ### DB-PG
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: org.postgresql.Driver
+    ###
+    initialSize: 3
+    maxActive: 100
+    minIdle: 5
+    maxWait: 60000
+    testOnBorrow: false
+    testOnReturn: false
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    removeAbandoned: true
+    removeAbandonedTimeout: 300
+    logAbandoned: false
+ 
+
+logging:
+  file: logs/log.log
+

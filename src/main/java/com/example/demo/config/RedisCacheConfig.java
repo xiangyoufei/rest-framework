@@ -17,12 +17,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisNode;
 import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import redis.clients.jedis.HostAndPort;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -52,7 +52,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 	private int maxIdle;
 
 	@Value("${spring.redis.pool.max-wait}")
-	private long maxWaitMillis;
+	private int maxWaitMillis;
 
 	@Value("${spring.redis.pool.max-active}")
 	private int maxTotal;
@@ -65,9 +65,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 
 
 	@Bean
-	public JedisPoolConfig jedisPoolConfig (@Value("${spring.redis.pool.max-active}")int maxTotal,  
-			@Value("${spring.redis.pool.max-idle}")int maxIdle,  
-			@Value("${spring.redis.pool.max-wait}")int maxWaitMillis) {  
+	public JedisPoolConfig jedisPoolConfig (int maxTotal,int maxIdle,  int maxWaitMillis) {  
 		JedisPoolConfig config = new JedisPoolConfig();  
 		config.setMaxTotal(maxTotal);  
 		config.setMaxIdle(maxIdle);  
@@ -90,19 +88,29 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 		JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
 		return jedisPool;
 	}
+	
+	/**
+	 * redis使用方法之一 ：Jedis
+	 * @param jedisPool
+	 * @return
+	 */
+	@Bean
+	public Jedis getJedis(JedisPool jedisPool) {
+		return jedisPool.getResource();
+	}
 
 	/**
 	 * 单节点的reids密码配置
 	 * @return
 	 */
-	@Bean
+	/*@Bean
 	public RedisStandaloneConfiguration standaloneConfig() {
 		RedisStandaloneConfiguration config=new RedisStandaloneConfiguration();
 		config.setHostName(host);
 		config.setPassword(RedisPassword.of(password.toCharArray()));
 		config.setPort(port);
 		return config;
-	}
+	}*/
 	
 
 	/**
@@ -117,7 +125,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 		JedisConnectionFactory factory=new JedisConnectionFactory(jedisPoolConfig);
 		return factory;
 	}
-	
+	/************************************************以上是单机节点配置************************************************/
 	
 	@Bean
 	public RedisClusterConfiguration redisClusterConfiguration() {
@@ -144,6 +152,12 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 		return factory;
 	}
 
+
+	/**
+	 * reids 使用方法之二: redisTemplate
+	 * @param factory
+	 * @return
+	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate(JedisConnectionFactory factory){
 		RedisTemplate<String, Object> template=new RedisTemplate<>();
@@ -153,6 +167,10 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 		return template;
 	}
 
+	/**
+	 *  redis 使用方法之三: JedisCluster
+	 * @return
+	 */
 	@Bean  
 	public JedisCluster getJedisCluster() {  
 		String[] serverArray = nodes.split(",");//获取服务器数组(这里要相信自己的输入，所以没有考虑空指针问题)  
