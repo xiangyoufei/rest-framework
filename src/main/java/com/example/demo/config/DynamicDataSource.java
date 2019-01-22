@@ -7,9 +7,14 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.druid.pool.DruidDataSource;
 
 
+@Component
 public class DynamicDataSource extends AbstractRoutingDataSource {
 	
     /**
@@ -18,7 +23,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     public static final String DEFAULTDATASOURCE = "mainDataSource";
 	
 	// 默认数据源，也就是主库
-    protected DataSource masterDataSource;
+    @Autowired
+    protected DruidDataSource masterDataSource;
     // 保存动态创建的数据源
     public static final Map<String,DataSource> targetDataSource = new HashMap<>();
 	
@@ -78,9 +84,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     
     
     /**
-	 * 查询对应数据库的信息
-	 * 
-	 * 这里是生成多数据源资源
+     * 初始化数据源
+=	 * 这里是生成多数据源资源
 	 * 
 	 * @param dbtype
 	 * @return
@@ -120,9 +125,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         return masterDataSource;
     }
  
-    public void setMasterDataSource(DataSource masterDataSource) {
-        this.masterDataSource = masterDataSource;
-    }
+  
     
 
 }

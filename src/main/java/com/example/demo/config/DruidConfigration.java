@@ -34,28 +34,28 @@ public class DruidConfigration {
     private int timeBetweenEvictionRunsMillis;  
     @Value("${spring.datasource.minEvictableIdleTimeMillis}")  
     private int minEvictableIdleTimeMillis;  
-    @Value("${spring.datasource.validationQuery}")  
-    private String validationQuery;  
+//    @Value("${spring.datasource.validationQuery}")  
+//    private String validationQuery;  
     @Value("${spring.datasource.testWhileIdle}")  
     private boolean testWhileIdle;  
     @Value("${spring.datasource.testOnBorrow}")  
     private boolean testOnBorrow;  
     @Value("${spring.datasource.testOnReturn}")  
     private boolean testOnReturn;  
-    @Value("${spring.datasource.poolPreparedStatements}")  
-    private boolean poolPreparedStatements;  
-    @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")  
-    private int maxPoolPreparedStatementPerConnectionSize;  
-    @Value("${spring.datasource.filters}")  
-    private String filters;  
-    @Value("${spring.datasource.connectionProperties}")  
-    private String connectionProperties;  
-    @Value("${spring.datasource.useGlobalDataSourceStat}")  
-    private boolean useGlobalDataSourceStat;  
+//    @Value("${spring.datasource.poolPreparedStatements}")  
+//    private boolean poolPreparedStatements;  
+//    @Value("${spring.datasource.maxPoolPreparedStatementPerConnectionSize}")  
+//    private int maxPoolPreparedStatementPerConnectionSize;  
+//    @Value("${spring.datasource.filters}")  
+//    private String filters;  
+//    @Value("${spring.datasource.connectionProperties}")  
+//    private String connectionProperties;  
+//    @Value("${spring.datasource.useGlobalDataSourceStat}")  
+//    private boolean useGlobalDataSourceStat;  
   
     @Bean     //声明其为Bean实例  
     @Primary  //在同样的DataSource中，首先使用被标注的DataSource  
-    public DataSource dataSource(){  
+    public DruidDataSource dataSource(){  
         DruidDataSource datasource = new DruidDataSource();  
         datasource.setUrl(this.dbUrl);  
         datasource.setUsername(username);  
@@ -69,19 +69,19 @@ public class DruidConfigration {
         datasource.setMaxWait(maxWait);  
         datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);  
         datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);  
-        datasource.setValidationQuery(validationQuery);  
+//        datasource.setValidationQuery(validationQuery);  
         datasource.setTestWhileIdle(testWhileIdle);  
         datasource.setTestOnBorrow(testOnBorrow);  
         datasource.setTestOnReturn(testOnReturn);  
-        datasource.setPoolPreparedStatements(poolPreparedStatements);  
-        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);  
-        datasource.setUseGlobalDataSourceStat(useGlobalDataSourceStat);  
-        try {  
-            datasource.setFilters(filters);  
-        } catch (SQLException e) {  
-            System.err.println("druid configuration initialization filter: "+ e);  
-        }  
-        datasource.setConnectionProperties(connectionProperties);  
+//        datasource.setPoolPreparedStatements(poolPreparedStatements);  
+//        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);  
+//        datasource.setUseGlobalDataSourceStat(useGlobalDataSourceStat);  
+//        try {  
+//            datasource.setFilters(filters);  
+//        } catch (SQLException e) {  
+//            System.err.println("druid configuration initialization filter: "+ e);  
+//        }  
+//        datasource.setConnectionProperties(connectionProperties);  
         return datasource;  
     }  
 }
