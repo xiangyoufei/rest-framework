@@ -23,7 +23,7 @@ import com.example.demo.config.DynamicDataSource;
 @Component
 public class DynamicDataSourceAspect {
 
-    @Before(" ")
+    @Before("com.example.demo.service")
     public void beforeSwitchDS(JoinPoint point){
 
         //获得当前访问的class
@@ -54,7 +54,7 @@ public class DynamicDataSourceAspect {
     }
 
 
-    @After(" ")
+    @After("com.example.demo.service")
     public void afterSwitchDS(JoinPoint point){
 
         DataSourceContextHolder.clearDB();

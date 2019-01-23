@@ -48,24 +48,21 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 	@Value("${spring.redis.timeout}")
 	private int timeout;
 
-	@Value("${spring.redis.pool.max-idle}")
+	@Value("${spring.redis.pool.maxIdle}")
 	private int maxIdle;
 
-	@Value("${spring.redis.pool.max-wait}")
+	@Value("${spring.redis.pool.maxWait}")
 	private int maxWaitMillis;
 
-	@Value("${spring.redis.pool.max-active}")
+	@Value("${spring.redis.pool.maxActive}")
 	private int maxTotal;
 
 	@Value("${spring.redis.pool.nodes}")
 	private String nodes; 
 
 
-
-
-
 	@Bean
-	public JedisPoolConfig jedisPoolConfig (int maxTotal,int maxIdle,  int maxWaitMillis) {  
+	public JedisPoolConfig jedisPoolConfig () {  
 		JedisPoolConfig config = new JedisPoolConfig();  
 		config.setMaxTotal(maxTotal);  
 		config.setMaxIdle(maxIdle);  
@@ -82,7 +79,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 	 * @return
 	 */
 	@Bean
-	@Primary
 	public JedisPool redisPoolFactory(JedisPoolConfig jedisPoolConfig) {
 		logger.info(" redispool 使用config 注解");
 		JedisPool jedisPool = new JedisPool(jedisPoolConfig, host, port, timeout, password);
@@ -94,23 +90,23 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 	 * @param jedisPool
 	 * @return
 	 */
-	@Bean
-	public Jedis getJedis(JedisPool jedisPool) {
-		return jedisPool.getResource();
-	}
+//	@Bean
+//	public Jedis getJedis(JedisPool jedisPool) {
+//		return jedisPool.getResource();
+//	}
 
 	/**
 	 * 单节点的reids密码配置
 	 * @return
 	 */
-	/*@Bean
-	public RedisStandaloneConfiguration standaloneConfig() {
-		RedisStandaloneConfiguration config=new RedisStandaloneConfiguration();
-		config.setHostName(host);
-		config.setPassword(RedisPassword.of(password.toCharArray()));
-		config.setPort(port);
-		return config;
-	}*/
+//	/*@Bean
+//	public RedisStandaloneConfiguration standaloneConfig() {
+//		RedisStandaloneConfiguration config=new RedisStandaloneConfiguration();
+//		config.setHostName(host);
+//		config.setPassword(RedisPassword.of(password.toCharArray()));
+//		config.setPort(port);
+//		return config;
+//	}*/
 	
 
 	/**

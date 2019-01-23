@@ -22,6 +22,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.example.demo.jdbc.cache.RedisCache;
 import com.github.pagehelper.PageHelper;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * MyBatis 配置
  * 
@@ -31,66 +33,33 @@ import com.github.pagehelper.PageHelper;
  *
  */
 @Configuration
+@Slf4j
 public class MyBatisConfiguration {
 
-	private static final Logger logger = LoggerFactory.getLogger(MyBatisConfiguration.class);
+//	private static final Logger logger = LoggerFactory.getLogger(MyBatisConfiguration.class);
 
 
 
-	/**SqlSessionFactory名称.*/
-	public final static String SESSIONFACTORY_NAME = "sqlSessionFactory";
-	/**mapper包路径，必须与其他SqlSessionFactory-mapper路径区分.*/
-	public final static String MAPPER_PACKAGE = "com.example.demo.dao";
 	/**mapper.xml文件路径，必须与其他SqlSessionFactory-mapper路径区分.*/
-	public final static String MAPPER_XML_PATH = "classpath:mapper/*.xml";
+	@Value("mybatis.mapperLocations")
+	public  String MAPPER_XML_PATH ;
 	/**mapper.xml文件路径，必须与其他SqlSessionFactory-mapper路径区分.*/
-	public final static String TYPE_ALIASES_PACKAGE = "com.example.demo.entity";
+	@Value("mybatis.typeAliasesPackage")
+	public   String TYPE_ALIASES_PACKAGE;
 
 
 	/**使用 @ConfigurationProperties 将前缀为的spring.datasource 的几个参数自动装配为DataSourceProperties 对象 */
 	@Autowired
-	private DataSourceProperties dataSourceProperties;
+	private DruidDataSource druidDataSource;
 
 	@Resource
 	private RedisCache redisCache;
 
-
-
-	@Value("${spring.datasource.max-wait}")
-	private int maxWait;
-
-	@Value("${spring.datasource.max-idle}")
-	private int maxIdle;
-
-	@Value("${spring.datasource.min-idle}")
-	private int minIdle;
-
-	@Value("${spring.datasource.initial-size}")
-	private int initialSize;
-
-	@Bean(name = "dataSource")
-	public DataSource dataSource() {
-		//建议封装成单独的类
-		DruidDataSource dataSource = new DruidDataSource();
-		dataSource.setUrl(dataSourceProperties.getUrl());
-		System.err.println(dataSourceProperties.getUrl());
-		dataSource.setDriverClassName(dataSourceProperties.getDriverClassName());
-		dataSource.setUsername(dataSourceProperties.getUsername());
-		dataSource.setPassword(dataSourceProperties.getPassword());
-		dataSource.setInitialSize(initialSize);
-		dataSource.setMinIdle(minIdle);
-		//      dataSource.setMaxIdle(maxIdle);
-		dataSource.setMaxWait(maxWait);
-		return dataSource;
-	}
-
 	@Bean(name = "dynamicDataSource")
-	public DataSource DynamicDataSource(@Qualifier("dataSource") DataSource dataSource) {
+	public DynamicDataSource  DynamicDataSource() {
 		DynamicDataSource dynamicDataSource = new DynamicDataSource();
 		// 默认数据源
-		dynamicDataSource.setDefaultTargetDataSource(dataSource);
-
-
+		dynamicDataSource.setDefaultTargetDataSource(druidDataSource);
 		return dynamicDataSource;
 	}
 
@@ -103,10 +72,10 @@ public class MyBatisConfiguration {
 
 	//默认Bean首字母小写，简化配置 
 	//将SqlSessionFactory作为Bean注入到Spring容器中，成为配置一部分。
-	@Bean(SESSIONFACTORY_NAME)
-	public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
+//	@Bean(name="sqlSessionFactory")
+	public SqlSessionFactory sqlSessionFactory( DynamicDataSource  dynamicDataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-		sqlSessionFactoryBean.setDataSource(dataSource);
+		sqlSessionFactoryBean.setDataSource(dynamicDataSource);
 		sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_XML_PATH));
 		sqlSessionFactoryBean.setTypeAliasesPackage(TYPE_ALIASES_PACKAGE);
 		sqlSessionFactoryBean.setCache(redisCache);
@@ -117,7 +86,7 @@ public class MyBatisConfiguration {
 
 	@Bean
 	public PageHelper pageHelper() {
-		logger.info("注册MyBatis分页插件PageHelper");
+		log.info("注册MyBatis分页插件PageHelper");
 		PageHelper pageHelper = new PageHelper();
 		Properties p = new Properties();
 		p.setProperty("offsetAsPageNum", "true");
