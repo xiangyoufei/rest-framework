@@ -6,6 +6,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +23,13 @@ import com.example.demo.config.DynamicDataSource;
 @Aspect
 @Component
 public class DynamicDataSourceAspect {
+	
+	@Pointcut("within(com.example.demo.controller.*)")
+	public void pointcut(){
 
-    @Before("com.example.demo.service")
+	}
+
+	@Before("pointcut()")
     public void beforeSwitchDS(JoinPoint point){
 
         //获得当前访问的class
@@ -54,7 +60,7 @@ public class DynamicDataSourceAspect {
     }
 
 
-    @After("com.example.demo.service")
+    @After("pointcut()")
     public void afterSwitchDS(JoinPoint point){
 
         DataSourceContextHolder.clearDB();

@@ -32,3 +32,9 @@ Spring初始化bean的时候，如果bean实现了InitializingBean接口，会�
  * 	并且同时在配置文件中指定了init-method，系统则是先调用afterPropertiesSet方法，然后在调用init-method中指定的方法。
  * 	也就是说这个方法在spring启动时候优先调用
  *  当然为了初始化某个方法，也可以使用init-method在配置文件设置，但是启动顺序 InitializingBean 更早
+ 
+ 
+分页插件的使用：https://github.com/pagehelper/Mybatis-PageHelper 
+ 可以直接返回totalCount  直接使用PageInfo 对象包装查询结果，然后获取总页数
+
+@AutoConfigureAfter

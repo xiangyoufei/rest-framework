@@ -45,3 +45,10 @@ mybatis:
   typeAliasesPackage: com.example.demo.entity
   mapperLocations: classpath:mapper/*.xml
 
+pagehelper : 
+  offsetAsPageNum : true
+  rowBoundsWithCount : true
+  reasonable : true
+  autoRuntimeDialect : true
+  
+

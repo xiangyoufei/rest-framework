@@ -38,7 +38,7 @@ public class RedisCache implements Cache {
 
     @Override
     public String getId() {
-        return this.id;
+        return  "testCache";
     }
 
     @Override

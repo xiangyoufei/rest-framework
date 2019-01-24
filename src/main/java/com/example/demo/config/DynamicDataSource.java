@@ -13,8 +13,11 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Component
+@Slf4j
 public class DynamicDataSource extends AbstractRoutingDataSource {
 	
     /**
@@ -28,7 +31,6 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     // 保存动态创建的数据源
     public static final Map<String,DataSource> targetDataSource = new HashMap<>();
 	
-    private static final Logger log = LoggerFactory.getLogger(DynamicDataSource.class);
 
     @Override
     protected String determineCurrentLookupKey() {
@@ -55,7 +57,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
             // 从已创建的数据库中获取要访问的数据库，如果没有则创建一个
             dataSource = this.selectDataSource(dataSourceName);
         }
-        System.out.println("determineTargetDataSource---" + dataSourceName);
+        log.info("determineTargetDataSource---" + dataSourceName);
         return dataSource;
     }
     
@@ -67,6 +69,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      * @return
      */
     public synchronized DataSource selectDataSource(String dbType) {
+    	log.info("------> selectDataSource");
         // 再次从数据库中获取，双检锁
         DataSource obj = targetDataSource.get(dbType);
         if (null != obj) {
@@ -91,6 +94,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
 	 * @return
 	 */
 	public DataSource getDataSource(String dbtype) {
+		log.info("-------> getDataSource()");
 		return  null;
 	}
  
