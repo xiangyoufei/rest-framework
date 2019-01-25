@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.aspect.IgnoreSecurity;
-import com.example.demo.dto.Response;
-import com.example.demo.dto.ResponseBean;
-import com.example.demo.entity.User;
+import com.example.demo.core.dto.Response;
+import com.example.demo.core.dto.ResponseBean;
+import com.example.demo.core.entity.User;
 import com.example.demo.security.jwt.JwtUtils;
 import com.example.demo.service.UserService;
 

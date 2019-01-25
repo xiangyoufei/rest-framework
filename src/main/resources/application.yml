@@ -42,7 +42,7 @@ logging:
   level: 
     root: info
 mybatis:
-  typeAliasesPackage: com.example.demo.entity
+  typeAliasesPackage: com.example.demo.core.entity
   mapperLocations: classpath:mapper/*.xml
 
 pagehelper : 

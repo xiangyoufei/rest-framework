@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.core.entity.User;
 import com.example.demo.dao.UserMapper;
-import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 
 

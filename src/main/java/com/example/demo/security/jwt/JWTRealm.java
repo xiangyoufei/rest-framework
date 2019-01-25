@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.entity.Module;
-import com.example.demo.entity.Role;
-import com.example.demo.entity.User;
+import com.example.demo.core.entity.Module;
+import com.example.demo.core.entity.Role;
+import com.example.demo.core.entity.User;
 import com.example.demo.service.UserService;
 
 @Component(value="jwtRealm")

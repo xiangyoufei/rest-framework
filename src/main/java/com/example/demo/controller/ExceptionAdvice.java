@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.example.demo.dto.Response;
-import com.example.demo.dto.ResponseBean;
+import com.example.demo.core.dto.Response;
+import com.example.demo.core.dto.ResponseBean;
 import com.example.demo.security.TokenException;
 
 @ControllerAdvice

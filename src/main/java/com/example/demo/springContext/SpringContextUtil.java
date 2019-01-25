@@ -11,8 +11,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.annotation.SetValue;
-import com.example.demo.entity.Order;
-import com.example.demo.entity.User;
+import com.example.demo.core.entity.Order;
+import com.example.demo.core.entity.User;
 
 /**
  * 获取Spring上下文
