@@ -7,11 +7,12 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSONObject;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import net.minidev.json.JSONObject;
 /**
  *
 * 类描述：    生成token的工具类

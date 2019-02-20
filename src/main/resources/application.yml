@@ -1,8 +1,12 @@
 server:
   port: 8885
+  
 spring:
   application:
     name: lccl
+  #i18国际化
+  messages:
+    baseFolder : i18n
   ### DB-PG
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/framework?useSSL=false&autoReconnect=true&failOverReadOnly=false

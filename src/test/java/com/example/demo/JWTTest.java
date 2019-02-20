@@ -1,13 +1,11 @@
 package com.example.demo;
 
-import org.junit.Test;
-
 import com.example.demo.core.entity.User;
 import com.example.demo.security.jwt.JwtUtils;
 
 public class JWTTest {
 	
-	@Test
+//	@Test
 	public void jwtTest() {
 		String username="lysss";
 		String password="0203";
