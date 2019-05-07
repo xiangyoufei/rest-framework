@@ -16,6 +16,7 @@
 @ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）
 @ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）
 @ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）
+@ConditionalOnProperty：如果Envrionment中存在此property、或者相应的property参数值匹配时，则执行。比如springboot中，各种内置的组件是否enabled，就是根据此条件判断
 @ConditionalOnNotWebApplication（不是web应用）
 @EnableTransactionManagement注解放到一个@Configuration类上，配置好事务管理器，并启用事务管理。
 @Transactional注解放到类上或方法上，可以设置注解的属性，表明该方法按配置好的属性参与到事务中。
