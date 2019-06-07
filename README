@@ -20,6 +20,7 @@
 @ConditionalOnNotWebApplication（不是web应用）
 @EnableTransactionManagement注解放到一个@Configuration类上，配置好事务管理器，并启用事务管理。
 @Transactional注解放到类上或方法上，可以设置注解的属性，表明该方法按配置好的属性参与到事务中。
+@ControllerAdvice @ExceptionAdvice  都是controller增强类。
 
 后续会继续补充
 
