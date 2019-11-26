@@ -1,8 +1,6 @@
 package com.example.demo.security.jwt;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apache.shiro.authc.AccountException;
@@ -19,10 +17,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.core.entity.Module;
-import com.example.demo.core.entity.Role;
-import com.example.demo.core.entity.User;
-import com.example.demo.service.UserService;
+import com.example.demo.web.entity.Module;
+import com.example.demo.web.entity.Role;
+import com.example.demo.web.entity.User;
+import com.example.demo.web.service.UserService;
 
 @Component(value="jwtRealm")
 public class JWTRealm extends AuthorizingRealm{

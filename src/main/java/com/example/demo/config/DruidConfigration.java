@@ -8,8 +8,11 @@ import org.springframework.context.annotation.Primary;
 
 import com.alibaba.druid.pool.DruidDataSource;
 
-@Configuration  
-public class DruidConfigration {  
+/**
+ * SpringBoot 自动装配就可
+ */
+//@Configuration
+public class DruidConfigration {
     @Value("${spring.datasource.url}")  
     private String dbUrl;  
     @Value("${spring.datasource.username}")  
@@ -69,15 +72,15 @@ public class DruidConfigration {
         datasource.setTestWhileIdle(testWhileIdle);  
         datasource.setTestOnBorrow(testOnBorrow);  
         datasource.setTestOnReturn(testOnReturn);  
-//        datasource.setPoolPreparedStatements(poolPreparedStatements);  
-//        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);  
-//        datasource.setUseGlobalDataSourceStat(useGlobalDataSourceStat);  
-//        try {  
-//            datasource.setFilters(filters);  
-//        } catch (SQLException e) {  
-//            System.err.println("druid configuration initialization filter: "+ e);  
-//        }  
-//        datasource.setConnectionProperties(connectionProperties);  
+//        datasource.setPoolPreparedStatements(poolPreparedStatements);
+//        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+//        datasource.setUseGlobalDataSourceStat(useGlobalDataSourceStat);
+//        try {
+//            datasource.setFilters(filters);
+//        } catch (SQLException e) {
+//            System.err.println("druid configuration initialization filter: "+ e);
+//        }
+//        datasource.setConnectionProperties(connectionProperties);
         return datasource;  
     }  
 }

@@ -19,11 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.example.demo.core.entity.Module;
-import com.example.demo.core.entity.Role;
-import com.example.demo.core.entity.User;
-import com.example.demo.security.jwt.JWTToken;
-import com.example.demo.service.UserService;
+import com.example.demo.web.entity.Module;
+import com.example.demo.web.entity.Role;
+import com.example.demo.web.entity.User;
+import com.example.demo.web.service.UserService;
 
 public class AuthRealm extends AuthorizingRealm{
 	

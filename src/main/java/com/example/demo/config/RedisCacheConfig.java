@@ -1,8 +1,5 @@
 package com.example.demo.config;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,12 +17,13 @@ import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import redis.clients.jedis.HostAndPort;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableCaching//启用缓存
@@ -112,7 +110,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport{
 	/**
 	 * redis连接工厂(单节点配置)
 	 * 没有配置连接池信息
-	 * @param config
+	 * @param jedisPoolConfig
 	 * @return
 	 */
 	@Bean

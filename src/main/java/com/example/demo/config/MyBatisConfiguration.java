@@ -12,8 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.example.demo.jdbc.cache.RedisCache;
-import com.github.pagehelper.PageHelper;
+import com.example.demo.core.mybatis.cache.RedisCache;
 import com.github.pagehelper.PageInterceptor;
 
 import lombok.extern.slf4j.Slf4j;

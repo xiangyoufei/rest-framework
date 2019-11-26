@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.core.entity.User;
+import com.example.demo.web.entity.User;
 import com.example.demo.security.jwt.JwtUtils;
 
 public class JWTTest {

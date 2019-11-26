@@ -7,4 +7,4 @@
 /mvnw.cmd
 /target/
 .idea
-/logs/
+/logs/*

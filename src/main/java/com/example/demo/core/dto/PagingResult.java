@@ -3,7 +3,7 @@ package com.example.demo.core.dto;
 
 import java.util.List;
 
-import com.example.demo.jdbc.paging.Paging;
+import com.example.demo.core.mybatis.paging.Paging;
 
 /**
  * 分页结果对象
